@@ -17,7 +17,8 @@ import com.yupi.yurpc.utils.ConfigUtils;
 public class ConsumerExample {
 
     public static void main(String[] args) {
-        System.out.println(RpcApplication.getRpcConfig());
+        UserService userService = ServiceProxyFactory.getProxy(UserService.class);
+        System.out.println(userService);
 
     }
 }
