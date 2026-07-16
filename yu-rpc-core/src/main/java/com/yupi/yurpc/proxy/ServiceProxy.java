@@ -7,6 +7,7 @@ import cn.hutool.http.HttpResponse;
 import com.yupi.yurpc.RpcApplication;
 import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.constant.RpcConstant;
+import com.yupi.yurpc.loadbalancer.LoadBalancerFactory;
 import com.yupi.yurpc.model.RpcRequest;
 import com.yupi.yurpc.model.RpcResponse;
 import com.yupi.yurpc.model.ServiceMetaInfo;
@@ -26,7 +27,9 @@ import io.vertx.core.net.SocketAddress;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 
@@ -71,7 +74,11 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
-            ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
+            //使用负载均衡来获取要请求的节点
+            Map<String,Object> requestParam = new HashMap<>();
+            //使用要调用的方法名作为负载均衡参数
+            requestParam.put("methodName",rpcRequest.getMethodName());
+            ServiceMetaInfo selectedServiceMetaInfo = LoadBalancerFactory.getLoadBalancer(RpcApplication.getRpcConfig().getLoadBalancer()).select(requestParam,serviceMetaInfoList);
             //使用封装好的VertxClient发送请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest,selectedServiceMetaInfo);
             return rpcResponse.getData();

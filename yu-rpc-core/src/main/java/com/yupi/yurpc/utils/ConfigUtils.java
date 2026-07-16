@@ -51,7 +51,6 @@ public class ConfigUtils {
         for (String ext : CONFIG_EXTENSIONS) {
             String fileName = baseName + ext;
             if (resourceExists(fileName)) {
-                System.out.println("<------configFile is " + fileName + " ------->");
                 ConfigFileWatcher.getInstance().register(fileName, () -> {
                     T newConfig = null;
                     try {
@@ -60,7 +59,6 @@ public class ConfigUtils {
                         throw new RuntimeException(e);
                     }
                     holder.update(newConfig);
-                    System.out.println("<-------holder update config-------->");
                 });
             }
         }

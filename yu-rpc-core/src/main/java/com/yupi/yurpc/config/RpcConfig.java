@@ -1,5 +1,6 @@
 package com.yupi.yurpc.config;
 
+import com.yupi.yurpc.loadbalancer.LoadBalancerKeys;
 import com.yupi.yurpc.serializer.SerializerKeys;
 import lombok.Data;
 
@@ -38,6 +39,11 @@ public class RpcConfig {
      * 序列化器
      */
     private String serializer = SerializerKeys.JDK;
+
+    /**
+     * 负载均衡器
+     */
+    private String loadBalancer = LoadBalancerKeys.ROUND_ROBIN;
 
     /**
      * 注册中心配置
