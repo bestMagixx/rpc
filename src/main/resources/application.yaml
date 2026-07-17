@@ -1,6 +1,0 @@
-spring.application.name: yu-rpc-core
-rpc:
-  name: yurpc
-  version: 2.0
-  serverPort: 8082
-  mock: true

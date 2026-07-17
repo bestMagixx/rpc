@@ -14,6 +14,7 @@
         <module>example-common</module>
         <module>example-provider</module>
         <module>example-consumer</module>
+        <module>yu-rpc-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -44,4 +45,41 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- 打包时同时生成源码 jar，便于使用者查看源码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--
+        发布到远程仓库时需要此配置（本地 mvn install 不需要）。
+        取消注释并填写你自己的仓库地址即可使用 mvn deploy。
+        snapshot 仓库用于 -SNAPSHOT 版本，release 仓库用于正式版本。
+    -->
+    <!--
+    <distributionManagement>
+        <repository>
+            <id>release-repo</id>
+            <url>https://你的仓库地址/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot-repo</id>
+            <url>https://你的仓库地址/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    -->
 </project>
