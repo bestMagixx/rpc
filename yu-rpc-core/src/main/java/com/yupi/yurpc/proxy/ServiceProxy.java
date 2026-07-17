@@ -7,6 +7,12 @@ import cn.hutool.http.HttpResponse;
 import com.yupi.yurpc.RpcApplication;
 import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.constant.RpcConstant;
+import com.yupi.yurpc.constant.RpcMapKeyConstant;
+import com.yupi.yurpc.fault.retry.RetryStrategy;
+import com.yupi.yurpc.fault.retry.RetryStrategyFactory;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategy;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategyFactory;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategyKeys;
 import com.yupi.yurpc.loadbalancer.LoadBalancerFactory;
 import com.yupi.yurpc.model.RpcRequest;
 import com.yupi.yurpc.model.RpcResponse;
@@ -27,9 +33,11 @@ import io.vertx.core.net.SocketAddress;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 
@@ -77,10 +85,28 @@ public class ServiceProxy implements InvocationHandler {
             //使用负载均衡来获取要请求的节点
             Map<String,Object> requestParam = new HashMap<>();
             //使用要调用的方法名作为负载均衡参数
-            requestParam.put("methodName",rpcRequest.getMethodName());
-            ServiceMetaInfo selectedServiceMetaInfo = LoadBalancerFactory.getLoadBalancer(RpcApplication.getRpcConfig().getLoadBalancer()).select(requestParam,serviceMetaInfoList);
-            //使用封装好的VertxClient发送请求
-            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest,selectedServiceMetaInfo);
+            requestParam.put(RpcMapKeyConstant.LOADBALANCER_PARAM,rpcRequest.getMethodName());
+            ServiceMetaInfo selectedServiceMetaInfo = LoadBalancerFactory.getLoadBalancer(RpcApplication.getRpcConfig().getLoadBalancer())
+                    .select(requestParam,serviceMetaInfoList);
+            //Rpc请求
+            //使用重试机制
+            RpcResponse rpcResponse;
+            try {
+                RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(RpcApplication.getRpcConfig().getRetryStrategy());
+                //使用封装好的VertxClient发送请求
+                rpcResponse = retryStrategy.doRetry(() -> VertxTcpClient.doRequest(rpcRequest,selectedServiceMetaInfo));
+            } catch (Exception e) {
+                //容错机制
+                TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
+                if(rpcConfig.getTolerantStrategy().equals(TolerantStrategyKeys.FAIL_OVER)){
+                    Map<String,Object> serviceMetaInfoMap = new HashMap<>();
+                    Map.Entry<RpcRequest,ServiceMetaInfo> entry = new AbstractMap.SimpleEntry<>(rpcRequest,selectedServiceMetaInfo);
+                    serviceMetaInfoMap.put(RpcMapKeyConstant.TOLERANT_PARAM, entry);
+                    rpcResponse = tolerantStrategy.doTolerant(serviceMetaInfoMap,e);
+                }else {
+                    rpcResponse = tolerantStrategy.doTolerant(null, e);
+                }
+            }
             return rpcResponse.getData();
         } catch (IOException e) {
             e.printStackTrace();

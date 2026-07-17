@@ -3,6 +3,8 @@ package com.yupi.yurpc.model;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
+import java.util.Objects;
+
 /**
  * 服务元信息（注册信息）
  */
@@ -69,4 +71,9 @@ public class ServiceMetaInfo {
         return String.format("%s:%s", serviceHost, servicePort);
     }
 
+    public boolean equals(ServiceMetaInfo serviceMetaInfo){
+        return serviceMetaInfo.serviceName.equals(this.serviceName)
+                && serviceMetaInfo.serviceVersion.equals(this.serviceVersion)
+                && serviceMetaInfo.getServiceAddress().equals(this.getServiceAddress());
+    }
 }
