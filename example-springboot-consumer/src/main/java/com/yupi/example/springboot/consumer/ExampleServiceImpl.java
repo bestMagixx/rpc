@@ -2,7 +2,7 @@ package com.yupi.example.springboot.consumer;
 
 import com.yupi.example.common.model.User;
 import com.yupi.example.common.service.UserService;
-import com.yupi.yurpc.springboot.starter.annotation.RpcReference;
+import com.bm.bmrpc.springboot.starter.annotation.RpcReference;
 import org.springframework.stereotype.Service;
 
 @Service

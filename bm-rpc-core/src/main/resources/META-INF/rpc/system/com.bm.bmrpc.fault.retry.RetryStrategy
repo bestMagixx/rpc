@@ -1,0 +1,3 @@
+no=com.bm.bmrpc.fault.retry.NoRetryStrategy
+fixedInterval=com.bm.bmrpc.fault.retry.FixedIntervalRetryStrategy
+exponentialBackoff=com.bm.bmrpc.fault.retry.ExponentialBackoffRetryStrategy

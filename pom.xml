@@ -4,23 +4,35 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.yupi</groupId>
-    <artifactId>yu-rpc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.bestMagixx</groupId>
+    <artifactId>bm-rpc</artifactId>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
+    <!-- 核心模块：默认构建并发布，体积最小 -->
     <modules>
-        <module>yu-rpc-core</module>
-        <module>yu-rpc-easy</module>
-        <module>example-common</module>
-        <module>example-provider</module>
-        <module>example-consumer</module>
-        <module>yu-rpc-spring-boot-starter</module>
+        <module>bm-rpc-core</module>
+        <module>bm-rpc-spring-boot-starter</module>
     </modules>
+
+    <!-- 示例 / 教学模块：默认不参与构建与发布，需要时用 -P with-examples 激活 -->
+    <profiles>
+        <profile>
+            <id>with-examples</id>
+            <modules>
+                <module>yu-rpc-easy</module>
+                <module>example-common</module>
+                <module>example-provider</module>
+                <module>example-consumer</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Lombok 版本统一管理，1.18.34 兼容 JDK 21 -->
+        <lombok.version>1.18.34</lombok.version>
     </properties>
 
     <dependencies>
@@ -40,12 +52,22 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <!-- 统一托管编译器插件版本，子模块声明时无需重复写 version -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <!-- 打包时同时生成源码 jar，便于使用者查看源码 -->
             <plugin>

@@ -2,7 +2,7 @@ package com.yupi.example.consumer;
 
 import com.yupi.example.common.model.User;
 import com.yupi.example.common.service.UserService;
-import com.yupi.yurpc.proxy.ServiceProxyFactory;
+import com.bm.bmrpc.proxy.ServiceProxyFactory;
 
 /**
  * 简易服务消费者示例

@@ -4,11 +4,11 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.yupi.example.common.model.User;
 import com.yupi.example.common.service.UserService;
-import com.yupi.yurpc.RpcApplication;
-import com.yupi.yurpc.model.RpcRequest;
-import com.yupi.yurpc.model.RpcResponse;
-import com.yupi.yurpc.serializer.Serializer;
-import com.yupi.yurpc.serializer.SerializerFactory;
+import com.bm.bmrpc.RpcApplication;
+import com.bm.bmrpc.model.RpcRequest;
+import com.bm.bmrpc.model.RpcResponse;
+import com.bm.bmrpc.serializer.Serializer;
+import com.bm.bmrpc.serializer.SerializerFactory;
 
 import java.io.IOException;
 

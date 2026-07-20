@@ -1,18 +1,14 @@
 package com.yupi.example.provider;
 
-import cn.hutool.core.net.NetUtil;
 import com.yupi.example.common.service.UserService;
-import com.yupi.yurpc.RpcApplication;
-import com.yupi.yurpc.config.RegistryConfig;
-import com.yupi.yurpc.config.RpcConfig;
-import com.yupi.yurpc.model.ServiceMetaInfo;
-import com.yupi.yurpc.registry.EtcdRegistry;
-import com.yupi.yurpc.registry.LocalRegistry;
-import com.yupi.yurpc.registry.Registry;
-import com.yupi.yurpc.registry.RegistryFactory;
-import com.yupi.yurpc.server.HttpServer;
-import com.yupi.yurpc.server.VertxHttpServer;
-import com.yupi.yurpc.server.tcp.VertxTcpServer;
+import com.bm.bmrpc.RpcApplication;
+import com.bm.bmrpc.config.RegistryConfig;
+import com.bm.bmrpc.config.RpcConfig;
+import com.bm.bmrpc.model.ServiceMetaInfo;
+import com.bm.bmrpc.registry.LocalRegistry;
+import com.bm.bmrpc.registry.Registry;
+import com.bm.bmrpc.registry.RegistryFactory;
+import com.bm.bmrpc.server.tcp.VertxTcpServer;
 
 /**
  * 服务提供者示例

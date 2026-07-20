@@ -3,14 +3,14 @@ package com.yupi.example.consumer;
 import cn.hutool.core.collection.CollUtil;
 import com.yupi.example.common.model.User;
 import com.yupi.example.common.service.UserService;
-import com.yupi.yurpc.RpcApplication;
-import com.yupi.yurpc.constant.RpcConstant;
-import com.yupi.yurpc.model.RpcRequest;
-import com.yupi.yurpc.model.RpcResponse;
-import com.yupi.yurpc.model.ServiceMetaInfo;
-import com.yupi.yurpc.registry.Registry;
-import com.yupi.yurpc.registry.RegistryFactory;
-import com.yupi.yurpc.server.tcp.VertxTcpClient;
+import com.bm.bmrpc.RpcApplication;
+import com.bm.bmrpc.constant.RpcConstant;
+import com.bm.bmrpc.model.RpcRequest;
+import com.bm.bmrpc.model.RpcResponse;
+import com.bm.bmrpc.model.ServiceMetaInfo;
+import com.bm.bmrpc.registry.Registry;
+import com.bm.bmrpc.registry.RegistryFactory;
+import com.bm.bmrpc.server.tcp.VertxTcpClient;
 
 import java.util.List;
 

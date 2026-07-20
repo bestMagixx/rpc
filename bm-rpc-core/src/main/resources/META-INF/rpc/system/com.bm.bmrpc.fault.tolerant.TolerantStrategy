@@ -1,0 +1,4 @@
+failBack=com.bm.bmrpc.fault.tolerant.FailBackTolerantStrategy
+failFast=com.bm.bmrpc.fault.tolerant.FailFastTolerantStrategy
+failOver=com.bm.bmrpc.fault.tolerant.FailOverTolerantStrategy
+failSafe=com.bm.bmrpc.fault.tolerant.FailSafeTolerantStrategy

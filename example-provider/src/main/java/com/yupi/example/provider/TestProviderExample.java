@@ -1,14 +1,14 @@
 package com.yupi.example.provider;
 
 import com.yupi.example.common.service.UserService;
-import com.yupi.yurpc.RpcApplication;
-import com.yupi.yurpc.constant.RpcConstant;
-import com.yupi.yurpc.model.ServiceMetaInfo;
-import com.yupi.yurpc.registry.LocalRegistry;
-import com.yupi.yurpc.registry.Registry;
-import com.yupi.yurpc.registry.RegistryFactory;
-import com.yupi.yurpc.server.HttpServer;
-import com.yupi.yurpc.server.tcp.VertxTcpServer;
+import com.bm.bmrpc.RpcApplication;
+import com.bm.bmrpc.constant.RpcConstant;
+import com.bm.bmrpc.model.ServiceMetaInfo;
+import com.bm.bmrpc.registry.LocalRegistry;
+import com.bm.bmrpc.registry.Registry;
+import com.bm.bmrpc.registry.RegistryFactory;
+import com.bm.bmrpc.server.HttpServer;
+import com.bm.bmrpc.server.tcp.VertxTcpServer;
 
 /**
  * 测试服务提供者 - 通过 EtcdRegistry 注册服务，测试 TcpServerHandler 消息处理

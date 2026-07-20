@@ -1,0 +1,3 @@
+roundRobin=com.bm.bmrpc.loadbalancer.RoundRobinLoadBalancer
+random=com.bm.bmrpc.loadbalancer.RandomLoadBalancer
+consistentHash=com.bm.bmrpc.loadbalancer.ConsistentHashLoadBalancer

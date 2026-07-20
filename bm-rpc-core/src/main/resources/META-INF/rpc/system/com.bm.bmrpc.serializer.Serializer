@@ -1,0 +1,4 @@
+jdk=com.bm.bmrpc.serializer.JdkSerializer
+hessian=com.bm.bmrpc.serializer.HessianSerializer
+json=com.bm.bmrpc.serializer.JsonSerializer
+kryo=com.bm.bmrpc.serializer.KryoSerializer
